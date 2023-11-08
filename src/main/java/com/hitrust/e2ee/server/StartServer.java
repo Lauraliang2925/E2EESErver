@@ -6,19 +6,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
-import com.hitrust.e2ee.util.Utility;
-
 public class StartServer extends ResourceConfig {
-	private static Logger LOG = Logger.getLogger(StartServer.class);
+	private static Logger LOG = LogManager.getLogger(StartServer.class);
 
 	/**
 	 * Register JAX-RS application components.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public StartServer() throws IOException {
 //		String envPath = getWebInfPath() + File.separator + "classes" + File.separator + "env";
@@ -26,10 +25,11 @@ public class StartServer extends ResourceConfig {
 		String log4jxml = getWebInfPath() + File.separator + "classes" + File.separator + Env.getEnvironment()
 				+ File.separator + "log4j.xml";
 		System.out.println(log4jxml);
-		DOMConfigurator.configure(log4jxml);
+//		DOMConfigurator.configure(log4jxml);
 		LOG.info("Start Server");
-		//ApplicationContext rootCtx = ContextLoader.getCurrentWebApplicationContext();
-		//ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");  
+		// ApplicationContext rootCtx = ContextLoader.getCurrentWebApplicationContext();
+		// ApplicationContext applicationContext = new
+		// ClassPathXmlApplicationContext("applicationContext.xml");
 		LOG.info("Start Init ServerEnv");
 		ServerEnv.init(Env.getEnvironment());
 		LOG.info("End Init ServerEnv");
@@ -38,7 +38,7 @@ public class StartServer extends ResourceConfig {
 		register(RequestContextFilter.class);
 //		register(SessionRequestFilter.class);
 //		register(CustomLoggingFilter.class);
-		
+
 		if (ConfigDefine.INIT_CLASS != null) {
 			for (String _class : ConfigDefine.INIT_CLASS) {
 				try {
@@ -72,7 +72,7 @@ public class StartServer extends ResourceConfig {
 
 		URL url = StartServer.class.getResource("StartServer.class");
 		String className = url.getFile();
-		className = URLDecoder.decode(className,"UTF-8");
+		className = URLDecoder.decode(className, "UTF-8");
 		filePath = className.substring(0, className.indexOf("WEB-INF") + "WEB-INF".length());
 		return filePath;
 	}

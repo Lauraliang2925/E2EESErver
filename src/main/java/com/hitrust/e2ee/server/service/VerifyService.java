@@ -1,6 +1,7 @@
 package com.hitrust.e2ee.server.service;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import com.hitrust.e2ee.server.bean.VerifyBean;
 @Component
 @Scope("prototype")
 public class VerifyService {
-	private static Logger LOG = Logger.getLogger(VerifyService.class);
+	private static Logger LOG = LogManager.getLogger(VerifyService.class);
 	
 	@Autowired
 	E2EEService e2eeService;

@@ -1,7 +1,8 @@
 package com.hitrust.e2ee.server.service;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import com.hitrust.e2ee.server.bean.EncryptBean;
 @Component
 @Scope("prototype")
 public class EncryptService {
-	private static Logger LOG = Logger.getLogger(EncryptService.class);
+	private static Logger LOG = LogManager.getLogger(EncryptService.class);
 	
 	@Autowired
 	E2EEService e2eeService;

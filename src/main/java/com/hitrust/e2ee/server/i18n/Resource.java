@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ import com.hitrust.e2ee.server.ServerEnv;
 @Scope("singleton")
 public class Resource {
 	
-	protected final static Logger LOG = Logger.getLogger(Resource.class);
+	protected final static Logger LOG = LogManager.getLogger(Resource.class);
 	
 	private Properties props = new Properties();
 	

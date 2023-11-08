@@ -1,9 +1,9 @@
 package com.hitrust.security.e2ee;
 
 public class E2EEJNI {
-	static {
-		System.loadLibrary("JniE2ee");
-	}
+//	static {
+//		System.loadLibrary("JniE2ee");
+//	}
 
 	public native String setPassWord(String arg0, String arg1);
 

@@ -18,8 +18,7 @@
 		</constructor-arg>
     </bean>
     <bean class="com.hitrust.security.e2ee.E2EEJNI" scope="singleton">
-		<!--  <constructor-arg value="C:/Program Files/Utimaco/CryptoServer/Lib/cs_pkcs11_R2.dll" index="0" >  
-		</constructor-arg>-->
+
     </bean>
    
 </beans>
