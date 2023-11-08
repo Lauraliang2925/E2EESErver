@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+     <bean class="com.hitrust.e2ee.server.Env" scope="singleton">
+     	<constructor-arg value="TEST" index="0" >  
+		</constructor-arg>
+    </bean>
+    <context:component-scan base-package="com.hitrust.e2ee.server" />
+    <bean class="com.hitrust.e2ee.server.service.E2EEService" scope="singleton">
+		<constructor-arg value="C:/Program Files/Utimaco/CryptoServer/Lib/cs_pkcs11_R2.dll" index="0" >  
+		</constructor-arg>
+    </bean>
+    <bean class="com.hitrust.security.e2ee.E2EEJNI" scope="singleton">
+		<!--  <constructor-arg value="C:/Program Files/Utimaco/CryptoServer/Lib/cs_pkcs11_R2.dll" index="0" >  
+		</constructor-arg>-->
+    </bean>
+   
+</beans>
