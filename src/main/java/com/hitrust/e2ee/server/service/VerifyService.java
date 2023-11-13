@@ -8,23 +8,21 @@ import org.springframework.stereotype.Component;
 
 import com.hitrust.e2ee.server.bean.VerifyBean;
 
-@Component
 @Scope("prototype")
+@Component
+/* loaded from: VerifyService.class */
 public class VerifyService {
-	private static Logger LOG = LogManager.getLogger(VerifyService.class);
-	
-	@Autowired
-	E2EEService e2eeService;
-	
-	private boolean pass;
-	
-	public int verify(VerifyBean bean)
-	{
-		pass = e2eeService.verify(bean.getData(), bean.getEncKey(), bean.getEncDBData());
-		return 0;
-	}
+    private static Logger LOG = LogManager.getLogger(VerifyService.class);
+    @Autowired
+    E2EEService e2eeService;
+    private boolean pass;
 
-	public boolean isPass() {
-		return pass;
-	}
+    public int verify(VerifyBean bean) {
+        this.pass = this.e2eeService.verify(bean.getData(), bean.getEncKey(), bean.getEncDBData()).booleanValue();
+        return 0;
+    }
+
+    public boolean isPass() {
+        return this.pass;
+    }
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Properties;
 
@@ -13,100 +14,91 @@ import org.apache.logging.log4j.Logger;
 
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
+/* loaded from: ServerEnv.class */
 public class ServerEnv {
-	private static Logger LOG = LogManager.getLogger(ServerEnv.class);
-	private static final String VERSION = "20170821-1500-01";
-	public static final String SERVICE = "E2EE";
-	public static final String COMPANY = "HiTRUST.COM Inc.";//company issuer
-	private static final String SERVER_NAME = "E2EEServer";
-//	public static final String COMPUTER_NAME = System.getenv("COMPUTERNAME");
-	public static final String COMPUTER_NAME = "E2EEServer";//E2EEServer
-	//private  static  String ENV = "";
-	//public static final String COMPUTER_NAME = ENV;
-	
-	//public static final String COMPUTER_NAME = "TEST";
-	public static final Charset DEF_ENCODING = java.nio.charset.StandardCharsets.UTF_8;;
+    private static final String VERSION = "20170821-1500-01";
+    public static final String SERVICE = "E2EE";
+    public static final String COMPANY = "HiTRUST.COM Inc.";
+    private static Logger LOG = LogManager.getLogger(ServerEnv.class);
+    public static final String COMPUTER_NAME = System.getenv("COMPUTERNAME");
+    public static final Charset DEF_ENCODING = StandardCharsets.UTF_8;
+    private static final String SERVER_NAME = "E2EEServer";
+    private static final String DEF_CFG = String.valueOf(File.separator) + SERVER_NAME + ".properties";
+    private static Properties props = new Properties();
+    public static final Key TOKENKEY = MacProvider.generateKey();
 
-	private static final String DEF_CFG = File.separator + SERVER_NAME + ".properties";
+    public static void init(String env) {
+        LOG.info("Server Version : 20170821-1500-01");
+        try {
+            props.putAll(readProperties(String.valueOf(env) + DEF_CFG));
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Not load config file", e);
+        }
+    }
 
-	private static Properties props = new Properties();
+    public static boolean isEmpty() {
+        return props.isEmpty();
+    }
 
-	public static final Key TOKENKEY =  MacProvider.generateKey();
-	
-	public static void init(String env) {
-		
-		LOG.info("Server Version : " + VERSION);
-		try {
-			props.putAll(readProperties(env+DEF_CFG));
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-			e.printStackTrace();
-			throw new RuntimeException("Not load config file", e);
-		}
-	}
-	
-//	public static void loadProperty() {
-//		init();
-//	}
+    public static String getProperty(String key) {
+        return props.getProperty(key);
+    }
 
-	public static boolean isEmpty() {
-		return props.isEmpty();
-	}
+    public static String getString(String key) {
+        return props.getProperty(key);
+    }
 
-	public static String getProperty(String key) {
-		return props.getProperty(key);
-	}
-	
-	public static String getString(String key)
-	{
-		return props.getProperty(key);
-	}
-	
-	public static Boolean getBoolean(String key) {
-		if (StringUtils.isBlank(props.getProperty(key)))
-			return false;
-		return Boolean.parseBoolean(props.getProperty(key));
-	}
+    public static Boolean getBoolean(String key) {
+        if (StringUtils.isBlank(props.getProperty(key))) {
+            return false;
+        }
+        return Boolean.valueOf(Boolean.parseBoolean(props.getProperty(key)));
+    }
 
-	public static Integer getInt(String key) {
-		if (StringUtils.isBlank(props.getProperty(key)))
-			return null;
-		return Integer.parseInt(props.getProperty(key));
-	}
+    public static Integer getInt(String key) {
+        if (StringUtils.isBlank(props.getProperty(key))) {
+            return null;
+        }
+        return Integer.valueOf(Integer.parseInt(props.getProperty(key)));
+    }
 
-	public static String[] getStringArray(String key, String split) {
-		if (StringUtils.isBlank(props.getProperty(key)))
-			return null;
-		return props.getProperty(key).split(split);
-	}
-	
-	public static Integer[] getIntArray(String key, String split) {
-		if (StringUtils.isBlank(props.getProperty(key)))
-			return null;
-		String[] tmp = props.getProperty(key).split(split);
-		Integer[] result = new Integer[tmp.length];
-		for (int i = 0 ; i < tmp.length; i++)
-		{
-			result[i] = Integer.parseInt(tmp[i]);
-		}
-		return result;
-	}
-	
-	private static Properties readProperties(String filename) throws IOException {
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		Properties properties = new Properties();
-		InputStreamReader isr = null;;
-		try
-		{
-			isr = new InputStreamReader(loader.getResourceAsStream(filename), ServerEnv.DEF_ENCODING);
-			properties.load(isr);
-		}
-		finally
-		{
-			if (isr != null)
-				isr.close();
-		}
-		return properties;
-	}
-	
+    public static String[] getStringArray(String key, String split) {
+        if (StringUtils.isBlank(props.getProperty(key))) {
+            return null;
+        }
+        return props.getProperty(key).split(split);
+    }
+
+    public static Integer[] getIntArray(String key, String split) {
+        if (StringUtils.isBlank(props.getProperty(key))) {
+            return null;
+        }
+        String[] tmp = props.getProperty(key).split(split);
+        Integer[] result = new Integer[tmp.length];
+        for (int i = 0; i < tmp.length; i++) {
+            result[i] = Integer.valueOf(Integer.parseInt(tmp[i]));
+        }
+        return result;
+    }
+
+    private static Properties readProperties(String filename) throws IOException {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties properties = new Properties();
+        InputStreamReader isr = null;
+        try {
+            isr = new InputStreamReader(loader.getResourceAsStream(filename), DEF_ENCODING);
+            properties.load(isr);
+            if (isr != null) {
+                isr.close();
+            }
+            return properties;
+        } catch (Throwable th) {
+            if (isr != null) {
+                isr.close();
+            }
+            throw th;
+        }
+    }
 }
