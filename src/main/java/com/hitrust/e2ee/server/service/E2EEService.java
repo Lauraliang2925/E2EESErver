@@ -10,6 +10,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class E2EEService {
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			System.out.println("AES_CBC_PKCS5PADDING IV:" + cipher.getIV());
 			System.out.println("AES_CBC_PKCS5PADDING Algoritm:" + cipher.getAlgorithm());
-			byte[] byteCipherText = cipher.doFinal(data.getBytes("UTF-8"));
+			byte[] byteCipherText = cipher.doFinal(data.getBytes(CharEncoding.UTF_8));
 //			SecretKeySpec AES = new SecretKeySpec(keyBytes, "AES");
 //			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 //			cipher.init(Cipher.ENCRYPT_MODE, AES);
@@ -87,7 +88,7 @@ public class E2EEService {
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			System.out.println("AES_CBC_PKCS5PADDING IV:" + cipher.getIV());
 			System.out.println("AES_CBC_PKCS5PADDING Algoritm:" + cipher.getAlgorithm());
-			byte[] byteCipherText = cipher.doFinal(data.getBytes("UTF-8"));
+			byte[] byteCipherText = cipher.doFinal(data.getBytes(CharEncoding.UTF_8));
 
 			BigInteger modulus = new BigInteger(Modulus, 16);
 			BigInteger exponent = new BigInteger(Exponent, 16);

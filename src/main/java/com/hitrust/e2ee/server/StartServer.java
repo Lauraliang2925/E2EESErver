@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -72,7 +73,7 @@ public class StartServer extends ResourceConfig {
 
 		URL url = StartServer.class.getResource("StartServer.class");
 		String className = url.getFile();
-		className = URLDecoder.decode(className, "UTF-8");
+		className = URLDecoder.decode(className, CharEncoding.UTF_8);
 		filePath = className.substring(0, className.indexOf("WEB-INF") + "WEB-INF".length());
 		return filePath;
 	}

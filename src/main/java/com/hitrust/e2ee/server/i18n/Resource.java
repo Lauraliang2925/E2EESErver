@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -72,7 +73,7 @@ public class Resource {
 	public String[] getStringArray(String key) {
 		if (StringUtils.isBlank(props.getProperty(key)))
 			return null;
-		return props.getProperty(key).split(",");
+		return props.getProperty(key).split(StringArrayPropertyEditor.DEFAULT_SEPARATOR);
 	}
 	
 	private Properties readProperties(String filename) throws IOException {

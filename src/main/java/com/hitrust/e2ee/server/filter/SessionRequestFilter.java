@@ -37,6 +37,7 @@ public class SessionRequestFilter implements ContainerRequestFilter {
 
 	protected final static Logger LOG = LogManager.getLogger(SessionRequestFilter.class);
 
+	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
 		String authorizationHeader = requestContext.getHeaderString("Authorization");
