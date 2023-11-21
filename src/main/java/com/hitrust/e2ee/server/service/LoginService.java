@@ -7,7 +7,9 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +20,7 @@ import com.hitrust.e2ee.util.Utility;
 @Component
 @Scope("prototype")
 public class LoginService {
-	private static Logger LOG = Logger.getLogger(LoginService.class);
+	private static Logger LOG = LogManager.getLogger(LoginService.class);
 	
 	private JsonArray trust = null;
 

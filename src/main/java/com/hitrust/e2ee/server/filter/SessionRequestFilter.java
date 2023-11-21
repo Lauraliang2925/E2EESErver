@@ -12,12 +12,14 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hitrust.e2ee.server.ConfigDefine;
 import com.hitrust.e2ee.server.ServerEnv;
 import com.hitrust.e2ee.server.i18n.Resource;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -33,8 +35,9 @@ public class SessionRequestFilter implements ContainerRequestFilter {
 	@Autowired
 	private Resource res;
 
-	protected final static Logger LOG = Logger.getLogger(SessionRequestFilter.class);
+	protected final static Logger LOG = LogManager.getLogger(SessionRequestFilter.class);
 
+	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
 		String authorizationHeader = requestContext.getHeaderString("Authorization");

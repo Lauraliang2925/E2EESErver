@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Configuration SYSTEM "log4j.dtd">
+<Configuration status="info">
+    <Appenders>
+        <RollingFile name="server" fileName="C:/logs/e2eeserver/e2eeserver.log"
+            filePattern="C:/logs/e2eeserver/e2eeserver-%d{yyyy-MM-dd-HH}.log">
+            <PatternLayout pattern="%d{ISO8601}{GMT+8} %t [%-20c] %-5p : %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.hitrust" level="debug">
+            <AppenderRef ref="server" />
+        </Logger>
+        <Logger name="org.springframework" level="debug">
+            <AppenderRef ref="server" />
+        </Logger>
+        <Logger name="sample" level="debug">
+            <AppenderRef ref="server" />
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="server" />
+        </Root>
+    </Loggers>
+</Configuration>
